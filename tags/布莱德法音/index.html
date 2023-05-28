@@ -51,6 +51,13 @@
 				
 			</a>
 		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/pinch/">
+				
+				<span class="menu__text">捏捏头像</span>
+				
+			</a>
+		</li>
 	</ul>
 </nav>
 
@@ -59,6 +66,53 @@
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap');
 </style>
 	<script async defer data-website-id="2757e0be-7f26-4b00-aac6-2ff511c9ea70" src="https://umm.fluorite.one/index.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.12/dist/fancybox.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.12/dist/fancybox.umd.js"></script>
+
+
+<script src="/js/waterfall.min.js"></script>
+<script src="/js/imgStatus.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  
+  var photosAll = document.getElementsByTagName('gallery') || '';
+  if(photosAll){
+    for(var i=0;i < photosAll.length;i++){
+      photosAll[i].innerHTML = '<div class="gallery-photos">'+photosAll[i].innerHTML+'</div>'
+      var photosIMG = photosAll[i].getElementsByTagName('img')
+      for(var j=0;j < photosIMG.length;j++){
+        wrap(photosIMG[j], document.createElement('div'));
+      }
+    }
+  }
+  function wrap(el, wrapper) {
+    wrapper.className = "gallery-photo";
+    el.parentNode.insertBefore(wrapper, el);
+    wrapper.appendChild(el);
+  }
+  
+  let galleryPhotos = document.querySelectorAll('.gallery-photos') || ''
+  if(galleryPhotos){
+    imgStatus.watch('.gallery-photo img', function(imgs) {
+      if(imgs.isDone()){
+        for(var i=0;i < galleryPhotos.length;i++){
+          waterfall(galleryPhotos[i]);
+          let pagePhoto = galleryPhotos[i].querySelectorAll('.gallery-photo');
+          for(var j=0;j < pagePhoto.length;j++){pagePhoto[j].className += " visible"};
+        }
+      }
+    });
+    window.addEventListener('resize', function () {
+      for(var i=0;i < galleryPhotos.length;i++){
+        waterfall(galleryPhotos[i]);
+      }
+    });
+  }
+});
+</script>
+
 </header>
 		<div class="wrapper flex">
 			<div class="primary">
